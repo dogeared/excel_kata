@@ -3,6 +3,32 @@ var excelFuncs = require('../lib/excel_kata')
 var assert = require('assert');
 describe('Excel Map', function () {
   describe('toColNotation', function () {
+     describe('validation', function () {
+       var expected = 'need a column number >= 1';
+       it('should deal with no input', function () {
+         assert.equal(
+           expected,
+           excelFuncs.toColNotation()
+         );
+       });
+
+       describe('bad input:', function () {
+         it('non numeric', function () {
+           assert.equal(
+             expected,
+             excelFuncs.toColNotation('blarg')
+           )
+         });
+
+         it('zero', function () {
+           assert.equal(
+             expected,
+             excelFuncs.toColNotation(0)
+           );
+         });
+       });
+     });
+
     describe('basic', function () {
       it('should return the letters of the alphabet', function () {
         for (var i=1; i<=26; i++) {
@@ -10,7 +36,6 @@ describe('Excel Map', function () {
         }
       });
     });
-
 
     describe('complex', function () {
       it('should return AA', function () {
@@ -44,6 +69,39 @@ describe('Excel Map', function () {
   });
 
   describe('fromColNotation', function () {
+    describe('validation', function () {
+      var expected = 'need a column string [a-zA-Z]+';
+      it('should deal with no input', function () {
+        assert.equal(
+          expected,
+          excelFuncs.fromColNotation()
+        );
+      });
+
+      describe('bad input:', function () {
+        it('bad characters: numeric', function () {
+          assert.equal(
+            expected,
+            excelFuncs.fromColNotation(700)
+          );
+        });
+
+        it('bad characters: number string', function () {
+          assert.equal(
+            expected,
+            excelFuncs.fromColNotation('700')
+          );
+        });
+
+        it('bad characters: symbols', function () {
+          assert.equal(
+            expected,
+            excelFuncs.fromColNotation('@')
+          )
+        });
+      });
+    });
+
     describe('basic', function () {
       it('should return 1', function () {
         assert.equal(excelFuncs.fromColNotation('A'), 1);
@@ -71,6 +129,20 @@ describe('Excel Map', function () {
 
       it('should return 704', function () {
         assert.equal(excelFuncs.fromColNotation('AAB'), 704);
+      });
+    });
+
+    describe('case', function () {
+      it('should deal with lower case', function () {
+        assert.equal(excelFuncs.fromColNotation('hello'), 3752127);
+      });
+
+      it('should deal with upper case', function () {
+        assert.equal(excelFuncs.fromColNotation('HELLO'), 3752127);
+      });
+
+      it('should deal with mixed case', function () {
+        assert.equal(excelFuncs.fromColNotation('HeLlO'), 3752127);
       });
     });
   });
