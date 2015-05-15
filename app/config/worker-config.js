@@ -13,6 +13,8 @@ function configureWorker(application) {
 }
 
 function configureApplication(application) {
+  application.set('port', (process.env.PORT || settingsConfig.settings.workerPort))
+
   application.use(bodyParser.json());
 
   application.use(function(req, res, next) {
@@ -31,8 +33,9 @@ function configureRoutes(application) {
 function startServer(application) {
   var server = http.createServer(application);
 
-  server.listen(settingsConfig.settings.workerPort, settingsConfig.settings.hostName, settingsConfig.settings.queueLength, function() {
-    console.log('listening at http://%s:%s', settingsConfig.settings.hostName, settingsConfig.settings.workerPort);
+  //server.listen(application.get('port'), settingsConfig.settings.hostName, settingsConfig.settings.queueLength, function() {
+  server.listen(application.get('port'), function() {
+    console.log('listening at http://%s:%s', settingsConfig.settings.hostName, application.get('port'));
   });
 }
 
