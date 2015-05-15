@@ -1,4 +1,4 @@
-var excelFuncs = require('../lib/excel_kata')
+var excelFuncs = require('../../../app/models/excel_kata')
 
 var assert = require('assert');
 describe('Excel Map', function () {

@@ -1,0 +1,14 @@
+{
+  "routes": [
+    {
+      "route": "/v1/excel_kata/to_col_notation/:num",
+      "method": "GET",
+      "controller": "../controllers/v1/excel_kata/to_col_notation-controller"
+    },
+    {
+      "route": "/v1/excel_kata/from_col_notation/:str",
+      "method": "GET",
+      "controller": "../controllers/v1/excel_kata/from_col_notation-controller"
+    }
+  ]
+}

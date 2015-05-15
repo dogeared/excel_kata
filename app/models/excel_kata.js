@@ -18,7 +18,7 @@ var isAlpha = function (str) {
 }
 
 var validateColNum = function (n) {
-  if (!n || !isNumber(n)) { 
+  if (!n || !parseInt(n) || !isNumber(n)) { 
     return 'need a column number >= 1';
   }
 }
