@@ -29,18 +29,26 @@ var validateColStr = function (str) {
   }
 }
 
+var mod26 = function (n) { 
+  var d = n%26;
+  return (d === 0) ? 26 : d;
+}
+
+var div26 = function (n, d) { 
+  var n = Math.floor(n/26);
+  return (d === 26) ? n - 1 : n;
+}
+
 excelFuncs.toColNotation = function (n) {
   var isNotValid = validateColNum(n);
   if (isNotValid) { return isNotValid; }
-  var res = [];
+
+  var res = [], d = 0;
+
   while (n !== 0) {
-    var digit = n%26;
-    n = Math.floor(n/26);    
-    if (digit === 0) {
-      n--;
-      digit = 26;
-    } 
-    res.push(numToChar(digit));
+    d = mod26(n);
+    n = div26(n, d);
+    res.push(numToChar(d));
   }
   return res.reverse().join('');
 }
@@ -48,6 +56,7 @@ excelFuncs.toColNotation = function (n) {
 excelFuncs.fromColNotation = function (str) {
   var isNotValid = validateColStr(str);
   if (isNotValid) { return isNotValid };
+
   str = str.toUpperCase();
   var strAry = str.split('').reverse();
   var num = 0;
